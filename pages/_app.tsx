@@ -28,6 +28,7 @@ Builder.register('insertMenu', {
     { name: 'ProductGrid' },
     { name: 'ProductBox' },
     { name: 'ProductView' },
+    { name: 'ProductVariantsBox' },
   ],
 })
 

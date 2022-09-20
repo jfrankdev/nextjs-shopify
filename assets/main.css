@@ -1,7 +1,35 @@
-@tailwind base;
+@import './fonts.css';
 @import './base.css';
-
-@tailwind components;
 @import './components.css';
-
+@tailwind base;
+@tailwind components;
 @tailwind utilities;
+
+.emptyCartAnchor {
+  @apply w-full flex justify-center outline-none;
+}
+
+.emptyCartBtn {
+  @apply border border-white p-4 rounded w-7/12 mt-4 font-extrabold tracking-wider font-openSans duration-300;
+}
+
+.emptyCartBtn:hover {
+  @apply bg-white text-ridgeBlack-100;
+}
+
+.checkoutBtn {
+  @apply m-2 p-5 text-center w-11/12 text-lg font-bold tracking-widest duration-300 ease-in-out bg-ridgeGreen-100 border-2 border-transparent;
+}
+
+.checkoutBtn:hover {
+  @apply border-ridgeGreen-100 bg-transparent text-ridgeGreen-100;
+}
+
+.addToCartBtn {
+  @apply bg-addCartBtn text-addCartText uppercase border-transparent border
+  transition-all duration-500 outline-none h-full w-full;
+}
+
+.addToCartBtn:hover {
+  @apply bg-ridgeWhite text-ridgeBlack-100 border-addCartBtn;
+}

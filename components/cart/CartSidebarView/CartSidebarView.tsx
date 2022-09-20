@@ -1,18 +1,20 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import React from 'react'
-import { Themed, jsx, Text, Card, Grid, Divider, NavLink } from 'theme-ui'
+import { jsx, Text } from 'theme-ui'
 import { FC, useEffect, useState } from 'react'
 import { Bag } from '@components/icons'
 import { useCart, useCheckoutUrl } from '@lib/shopify/storefront-data-hooks'
 import CartItem from '../CartItem'
 import { BuilderComponent, builder } from '@builder.io/react'
 import env from '@config/env'
+import Link from 'next/link'
+
 
 const CartSidebarView: FC = () => {
   const checkoutUrl = useCheckoutUrl()
   const cart = useCart()
-  const subTotal = cart?.subtotalPrice
+  const subTotal: string | undefined = cart?.subtotalPrice
   const total = ' - '
 
   const items = cart?.lineItems ?? []
@@ -24,7 +26,7 @@ const CartSidebarView: FC = () => {
       const items = cart?.lineItems || []
       const cartUpsellContent = await builder
         .get('cart-upsell-sidebar', {
-          cacheSeconds: 120,
+          cachebust: env.isDev,
           userAttributes: {
             itemInCart: items.map((item: any) => item.variant.product.handle),
           } as any,
@@ -36,30 +38,64 @@ const CartSidebarView: FC = () => {
   }, [cart?.lineItems])
 
   return (
-    <Themed.div
-      sx={{
-        height: '100%',
-        overflow: 'auto',
-        paddingBottom: 5,
-        bg: 'text',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        px: 2,
-        color: 'background',
-        ...(isEmpty && { justifyContent: 'center' }),
-      }}
-    >
+    <div className=" cart_sidebar flex flex-col items-center justify-center px-2 overflow-auto pb-2 text-white">
       {isEmpty ? (
         <>
           <Bag />
-          Your cart is empty
-          <Text>
-            Biscuit oat cake wafer icing ice cream tiramisu pudding cupcake.
-          </Text>
+          <div className="empty_cart_text font-openSans text-xl mt-4 tracking-wider">
+            Your Cart Is Empty
+          </div>
+          <button className="emptyCartBtn">
+            <a
+              className="emptyCartAnchor"
+              href="https://ridge.com/collections/all-wallets"
+            >
+              SHOP WALLETS
+            </a>
+          </button>
+
+          <button className="emptyCartBtn">
+            <a
+              className="emptyCartAnchor"
+              href="https://ridge.com/collections/bags"
+            >
+              SHOP BAGS
+            </a>
+          </button>
+          <button className="emptyCartBtn">
+            <a
+              className="emptyCartAnchor"
+              href="https://ridge.com/collections/phone-cases"
+            >
+              SHOP CARD CASES
+            </a>
+          </button>
+
+          <button className="emptyCartBtn">
+            <a
+              className="emptyCartAnchor"
+              href="https://ridge.com/collections/gear"
+            >
+              SHOP MULTI-GEAR
+            </a>
+          </button>
+          <button className="emptyCartBtn">
+            <a
+              className="emptyCartAnchor"
+              href="https://ridge.com/collections/accessories"
+            >
+              SHOP ACCESSORIES
+            </a>
+          </button>
         </>
       ) : (
         <>
+          <div className="checkmark flex justify-center items-center mb-4">
+            <img className="w-8 h-8" src="./checkmark.png" alt='Cart Checkmark'></img>
+            <div className="item_added_text font-tradegothicbold text-2xl ml-2">
+              JUST ADDED TO CART
+            </div>
+          </div>
           {items.map((item: any) => (
             <CartItem
               key={item.id}
@@ -68,37 +104,26 @@ const CartSidebarView: FC = () => {
               currencyCode={item.variant?.priceV2?.currencyCode || 'USD'}
             />
           ))}
-          <Card sx={{ marginLeft: 'auto', minWidth: '10rem', paddingLeft: 5 }}>
-            <Grid gap={1} columns={2} sx={{ my: 3 }}>
-              <Text>Subtotal:</Text>
-              <Text sx={{ marginLeft: 'auto' }}>{subTotal}</Text>
-              <Text>Shipping:</Text>
-              <Text sx={{ marginLeft: 'auto' }}> - </Text>
-              <Text>Tax: </Text>
-              <Text sx={{ marginLeft: 'auto' }}> - </Text>
-            </Grid>
+          <div className="cart_subtotal flex flex-row items-center justify-between my-5 h-6 w-10/12 tracking-wider">
+            <div className="subtotal_text text-xl ">Subtotal</div>
+            <div className="subtotal_number text-2xl font-tradegothicbold">
+              {'$'}{Number(subTotal)} USD
+            </div>
+          </div>
 
-            <Divider />
-            <Grid gap={1} columns={2}>
-              <Text variant="bold">Estimated Total:</Text>
-              <Text variant="bold" sx={{ marginLeft: 'auto' }}>
-                {total}
-              </Text>
-            </Grid>
-          </Card>
-          <BuilderComponent content={cartUpsell} model="cart-upsell-sidebar" />
+          {/* <BuilderComponent
+              content={cartUpsell}
+              model="cart-upsell-sidebar"
+            /> */}
+
           {checkoutUrl && (
-            <NavLink
-              variant="nav"
-              sx={{ width: '100%', m: 2, p: 12, textAlign: 'center' }}
-              href={checkoutUrl!}
-            >
-              Proceed to Checkout
-            </NavLink>
+            <Link href={checkoutUrl!}>
+              <button className="checkoutBtn">CHECKOUT</button>
+            </Link>
           )}
         </>
       )}
-    </Themed.div>
+    </div>
   )
 }
 

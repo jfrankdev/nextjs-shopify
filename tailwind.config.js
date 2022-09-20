@@ -40,6 +40,18 @@ module.exports = {
         blue: 'var(--blue)',
         green: 'var(--green)',
         red: 'var(--red)',
+        ridgeGreen: {
+          100: '#7fda79',
+        },
+        ridgebg: {
+          100: '#262626',
+        },
+        ridgeBlack: {
+          100: '#393939',
+        },
+        ridgeWhite: '#f3f3f3',
+        addCartBtn: '#80da79',
+        addCartText: '#fefefe',
       },
       textColor: {
         base: 'var(--text-base)',
@@ -56,6 +68,12 @@ module.exports = {
       },
       scale: {
         120: '1.2',
+      },
+      fontFamily: {
+        tradegothicbold: ['tradegothicbold'],
+        HelveticaNeueRegular: ['HelveticaNeue-Regular'],
+        HelveticaNeueMedium: ['HelveticaNeue-Medium'],
+        openSans: ['Open Sans'],
       },
     },
   },

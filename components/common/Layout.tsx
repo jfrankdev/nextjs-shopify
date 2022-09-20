@@ -101,13 +101,13 @@ const InnerLayout: React.FC<{
         <CartSidebarView />
       </Sidebar>
       <NoSSR>
-        <FeatureBar
+        {/* <FeatureBar
           title="This site uses cookies to improve your experience. By clicking, you agree to our Privacy Policy."
           hide={Builder.isEditing ? true : acceptedCookies}
           action={
             <Button onClick={() => onAcceptCookies()}>Accept cookies</Button>
           }
-        />
+        /> */}
       </NoSSR>
     </ThemeProvider>
   )

@@ -23,6 +23,12 @@ const Sidebar: FC<Props> = ({ children, open = false, onClose }) => {
           top: 0,
           right: 0,
           height: '100%',
+          backgroundColor: '#262626',
+        },
+      }}
+      overlayProps={{
+        style: {
+          zIndex: 1000,
         },
       }}
       contentTransition={{
@@ -39,6 +45,9 @@ const Sidebar: FC<Props> = ({ children, open = false, onClose }) => {
             py: 1,
             bg: 'text',
             color: 'background',
+            backgroundColor: '#262626',
+            outline: 'none',
+            border: 'none',
           }}
         >
           <Close />

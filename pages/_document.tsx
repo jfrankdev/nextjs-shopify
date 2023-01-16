@@ -50,9 +50,15 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
-          {/* START - GOOGLE TAG MANAGER */}
-           <!-- anti-flicker snippet (recommended)  -->
-           <style>.async-hide { opacity: 0 !important} </style>
+           {/* 
+            Google Optimize Ant-Flicker Snippet
+            https://support.google.com/optimize/answer/9692472?ref_topic=6197443
+            https://stackoverflow.com/questions/63994663/general-problems-with-google-optimize-in-react-next-js
+          */}
+          <style
+            dangerouslySetInnerHTML={{
+              __html: `.async-hide { opacity: 0 !important}`,
+            }}
           <script
             dangerouslySetInnerHTML={{
               __html: `

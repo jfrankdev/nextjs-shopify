@@ -5,9 +5,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* anti-flicker snippet (recommended) */
-.async-hide { opacity: 0 !important}
-
 .emptyCartAnchor {
   @apply w-full flex justify-center outline-none;
 }

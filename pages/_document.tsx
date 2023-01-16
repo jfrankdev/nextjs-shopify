@@ -59,6 +59,7 @@ class MyDocument extends Document {
             dangerouslySetInnerHTML={{
               __html: `.async-hide { opacity: 0 !important}`,
             }}
+           />
           <script
             dangerouslySetInnerHTML={{
               __html: `

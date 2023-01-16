@@ -55,6 +55,14 @@ class MyDocument extends Document {
             dangerouslySetInnerHTML={{
               __html: `
               if(!(window.location.href.includes("nogtm"))){
+                <!-- anti-flicker snippet (recommended)  -->
+                <style>.async-hide { opacity: 0 !important} </style>
+                (function(a,s,y,n,c,h,i,d,e){s.className+=' '+y;h.start=1*new Date;
+                h.end=i=function(){s.className=s.className.replace(RegExp(' ?'+y),'')};
+                (a[n]=a[n]||[]).hide=h;setTimeout(function(){i();h.end=null},c);h.timeout=c;
+                })(window,document.documentElement,'async-hide','dataLayer',4000,
+                {'${process.env.NEXT_PUBLIC_GTM}':true});
+
                 <!-- Google Tag Manager -->
                 (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
                 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],

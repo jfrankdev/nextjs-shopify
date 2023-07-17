@@ -134,3 +134,9 @@ a {
     opacity: 1;
   }
 }
+
+.css-mhqd9g-InnerLayout {
+  padding: 0px !important;
+  max-width: 100% !important;
+  overflow-x: hidden !important;
+}

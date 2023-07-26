@@ -44,7 +44,6 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
-          {/* Implementing partytown to GTM. The GTM tag is in _app.tsx */}
           {/* 
             Google Optimize Ant-Flicker Snippet
             https://support.google.com/optimize/answer/9692472?ref_topic=6197443

@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@builder.io/partytown": "^0.8.0",
     "@builder.io/react": "^3.0.7",
     "@netlify/plugin-nextjs": "^4.39.1",
     "@types/node": "20.4.2",

@@ -45,18 +45,6 @@ class MyDocument extends Document {
       <Html>
         <Head>
           {/* Implementing partytown to GTM. The GTM tag is in _app.tsx */}
-          <script
-            data-partytown-config
-            dangerouslySetInnerHTML={{
-              __html: `
-            partytown = {
-              lib: '/_next/static/~partytown/',
-              debug: true,
-              forward: ['dataLayer.push']
-            };
-          `,
-            }}
-          />
           {/* 
             Google Optimize Ant-Flicker Snippet
             https://support.google.com/optimize/answer/9692472?ref_topic=6197443

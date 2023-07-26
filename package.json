@@ -6,8 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "partytown": "partytown copylib public/~partytown"
+    "lint": "next lint"
   },
   "dependencies": {
     "@builder.io/react": "^3.0.7",

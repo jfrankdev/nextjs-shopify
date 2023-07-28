@@ -1,113 +1,142 @@
-import Document, {
-  Html,
-  Head,
-  Main,
-  NextScript,
-  DocumentContext,
-} from 'next/document'
-import cheerio from 'cheerio'
+import { Html, Head, Main, NextScript } from "next/document";
+import Image from "next/image";
+import Script from "next/script";
 
-/**
- * See this issue for more details https://github.com/emotion-js/emotion/issues/2040
- * Theme-ui using emotion which render styles inside template tags causing it not to apply when rendering
- * A/B test variations on the server, this fixes this issue by extracting those styles and appending them to body
- */
-const extractABTestingStyles = (body: string) => {
-  let globalStyles = ''
+export default function Document() {
+  return (
+    <Html lang="en">
+      <Head>
+        <Script id="google-tag-manager" strategy="worker">
+          {`
+          (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+          new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+          j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+          'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+          })(window,document,'script','dataLayer','GTM-MBZQQTS');
+        `}
+        </Script>
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-M554GRGBNJ"
+          strategy="worker"
+        />
+        <Script id="google-analytics" strategy="worker">
+          {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+ 
+          gtag('config', 'G-M554GRGBNJ');
+        `}
+        </Script>
+        {/* Begin: Northbeam pixel */}
+        <Script
+          src="//j.northbeam.io/ota-sp/33aa0d9c-88df-4135-9853-0348fa592ae9.js"
+          strategy="afterInteractive"
+        />
+        {/* End: Northbeam pixel */}
 
-  if (body.includes('<template')) {
-    const $ = cheerio.load(body)
-    const templates = $('template')
-    templates.toArray().forEach((element) => {
-      const str = $(element).html()
-      const styles = cheerio.load(String(str))('style')
-      globalStyles += styles
-        .toArray()
-        .map((el) => $(el).html())
-        .join(' ')
-    })
-  }
-  return globalStyles
-}
+        {/* TikTok Analytics */}
+        <Script id="ttq-script" strategy="afterInteractive">
+          {`!(function (w, d, t) {
+              w.TiktokAnalyticsObject = t;
+              var ttq = (w[t] = w[t] || []);
+              ttq.methods = [
+                "page",
+                "track",
+                "identify",
+                "instances",
+                "debug",
+                "on",
+                "off",
+                "once",
+                "ready",
+                "alias",
+                "group",
+                "enableCookie",
+                "disableCookie",
+              ];
+              ttq.setAndDefer = function (t, e) {
+                t[e] = function () {
+                  t.push([e].concat(Array.prototype.slice.call(arguments, 0)));
+                };
+              };
+              for (var i = 0; i < ttq.methods.length; i++)
+                ttq.setAndDefer(ttq, ttq.methods[i]);
+              ttq.instance = function (t) {
+                for (
+                  var e = ttq._i[t] || [], n = 0;
+                  n < ttq.methods.length;
+                  n++
+                )
+                  ttq.setAndDefer(e, ttq.methods[n]);
+                return e;
+              };
+              ttq.load = function (e, n) {
+                var i = "https://analytics.tiktok.com/i18n/pixel/events.js";
+                ttq._i = ttq._i || {};
+                ttq._i[e] = [];
+                ttq._i[e]._u = i;
+                ttq._t = ttq._t || {};
+                ttq._t[e] = +new Date();
+                ttq._o = ttq._o || {};
+                ttq._o[e] = n || {};
+                var o = document.createElement("script");
+                o.type = "text/javascript";
+                o.async = true;
+                o.src = i + "?sdkid=" + e + "&lib=" + t;
+                var a = document.getElementsByTagName("script")[0];
+                a.parentNode.insertBefore(o, a);
+              };
 
-class MyDocument extends Document {
-  static async getInitialProps(ctx: DocumentContext) {
-    const originalRenderPage = ctx.renderPage
+              ttq.load("C7NE8BKD81EIAPSD6EM0");
+              ttq.page();
+            })(window, document, "ttq");`}
+        </Script>
 
-    let globalStyles = ''
-    ctx.renderPage = async (options) => {
-      const render = await originalRenderPage(options)
-      globalStyles = extractABTestingStyles(render.html)
-      return render
-    }
-    const initialProps = await Document.getInitialProps(ctx)
-    return {
-      ...initialProps,
-      globalStyles,
-    }
-  }
-  render() {
-    return (
-      <Html>
-        <Head>
-           {/* 
-            Google Optimize Ant-Flicker Snippet
-            https://support.google.com/optimize/answer/9692472?ref_topic=6197443
-            https://stackoverflow.com/questions/63994663/general-problems-with-google-optimize-in-react-next-js
-          */}
-          <style
-            dangerouslySetInnerHTML={{
-              __html: `.async-hide { opacity: 0 !important}`,
-            }}
-           />
-          <script
-            dangerouslySetInnerHTML={{
-              __html: `
-              if(!(window.location.href.includes("nogtm"))){
-                <!-- anti-flicker snippet (recommended)  -->
-                (function(a,s,y,n,c,h,i,d,e){s.className+=' '+y;h.start=1*new Date;
-                h.end=i=function(){s.className=s.className.replace(RegExp(' ?'+y),'')};
-                (a[n]=a[n]||[]).hide=h;setTimeout(function(){i();h.end=null},c);h.timeout=c;
-                })(window,document.documentElement,'async-hide','dataLayer',4000,
-                {'${process.env.NEXT_PUBLIC_GTM}':true});
+        {/* Meta Pixel Code */}
+        <Script id="meta-script" strategy="afterInteractive">
+          {`!(function (f, b, e, v, n, t, s) {
+              if (f.fbq) return;
+              n = f.fbq = function () {
+                n.callMethod
+                  ? n.callMethod.apply(n, arguments)
+                  : n.queue.push(arguments);
+              };
+              if (!f._fbq) f._fbq = n;
+              n.push = n;
+              n.loaded = !0;
+              n.version = "2.0";
+              n.queue = [];
+              t = b.createElement(e);
+              t.async = true;
+              t.src = v;
+              s = b.getElementsByTagName(e)[0];
+              s.parentNode.insertBefore(t, s);
+            })(
+              window,
+              document,
+              "script",
+              "https://connect.facebook.net/en_US/fbevents.js"
+            );
+            fbq("init", "928701198571455");
+            fbq("track", "PageView");`}
+        </Script>
 
-                <!-- Google Tag Manager -->
-                (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-                new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-                j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-                'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-                })(window,document,'script','dataLayer','${process.env.NEXT_PUBLIC_GTM}');
-                <!-- End Google Tag Manager -->
-              }
-            `,
-            }}
+        <noscript>
+          <Image
+            alt="Facebook Pixel"
+            height="1"
+            width="1"
+            style={{ display: "none" }}
+            src="https://www.facebook.com/tr?id=928701198571455&ev=PageView&noscript=1"
           />
-          {/* END - GOOGLE TAG MANAGER */}
-        </Head>
-        <body>
-          {/* START - GOOGLE TAG MANAGER for inside body tag */}
-          <noscript
-            dangerouslySetInnerHTML={{
-              __html: `
-              <!-- Google Tag Manager (noscript) -->
-              <iframe src='https://www.googletagmanager.com/ns.html?id=${process.env.NEXT_PUBLIC_GTM}'
-              height='0' width='0' style='display:none;visibility:hidden'></iframe>
-              <!-- End Google Tag Manager (noscript) -->
-            `,
-            }}
-          />
-          {/* END - GOOGLE TAG MANAGER for inside body tag */}
-          <style
-            dangerouslySetInnerHTML={{
-              __html: (this.props as any).globalStyles,
-            }}
-          ></style>
-          <Main />
-          <NextScript />
-        </body>
-      </Html>
-    )
-  }
+        </noscript>
+        {/* End Meta Pixel Code */}
+      </Head>
+      <body>
+        <Main />
+        <NextScript />
+      </body>
+    </Html>
+  );
 }
-
-export default MyDocument

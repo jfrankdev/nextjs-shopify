@@ -5,9 +5,6 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
-        <Script id="test-script" strategy="beforeInteractive">
-          {`console.log("NEXTJS SCRIPT COMPONENT #12 DEPLOYED!")`}
-        </Script>
         <Script id="google-tag-manager" strategy="worker">
           {`
           (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':

@@ -1,12 +1,10 @@
 import { Html, Head, Main, NextScript } from "next/document";
 import Script from "next/script";
-import { Partytown } from "@builder.io/partytown/react";
 
 export default function Document() {
   return (
     <Html lang="en">
       <Head>
-        <Partytown debug={true} forward={["dataLayer.push"]} />
         <Script id="google-tag-manager" strategy="worker">
           {`
           (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -16,6 +14,12 @@ export default function Document() {
           })(window,document,'script','dataLayer','GTM-MBZQQTS');
         `}
         </Script>
+        <Script 
+          id='text-script'
+          onLoad={() => {
+            console.log("NETLIFY PREVIEW THEME TEST DEPLOYED!!")
+          }}  
+        />
       </Head>
       <body>
         <Main />

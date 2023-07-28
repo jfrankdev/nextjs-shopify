@@ -14,12 +14,11 @@ export default function Document() {
           })(window,document,'script','dataLayer','GTM-MBZQQTS');
         `}
         </Script>
-        <Script 
-          id='text-script'
-          onLoad={() => {
-            console.log("NETLIFY PREVIEW THEME TEST DEPLOYED!!")
-          }}  
-        />
+        <Script id='test-script' >
+          {
+            `console.log("NEXTJS SCRIPT COMPONENT #12 DEPLOYED!")`
+          }
+          </Script>
       </Head>
       <body>
         <Main />

@@ -1,11 +1,5 @@
-import Document, {
-  Html,
-  Head,
-  Main,
-  NextScript,
-  DocumentContext,
-} from 'next/document'
-import cheerio from 'cheerio'
+import Document, { Html, Head, Main, NextScript, DocumentContext } from "next/document";
+import cheerio from "cheerio";
 
 /**
  * See this issue for more details https://github.com/emotion-js/emotion/issues/2040
@@ -13,44 +7,44 @@ import cheerio from 'cheerio'
  * A/B test variations on the server, this fixes this issue by extracting those styles and appending them to body
  */
 const extractABTestingStyles = (body: string) => {
-  let globalStyles = ''
+  let globalStyles = "";
 
-  if (body.includes('<template')) {
-    const $ = cheerio.load(body)
-    const templates = $('template')
+  if (body.includes("<template")) {
+    const $ = cheerio.load(body);
+    const templates = $("template");
     templates.toArray().forEach((element) => {
-      const str = $(element).html()
-      const styles = cheerio.load(String(str))('style')
+      const str = $(element).html();
+      const styles = cheerio.load(String(str))("style");
       globalStyles += styles
         .toArray()
         .map((el) => $(el).html())
-        .join(' ')
-    })
+        .join(" ");
+    });
   }
-  return globalStyles
-}
+  return globalStyles;
+};
 
 class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
-    const originalRenderPage = ctx.renderPage
+    const originalRenderPage = ctx.renderPage;
 
-    let globalStyles = ''
+    let globalStyles = "";
     ctx.renderPage = async (options) => {
-      const render = await originalRenderPage(options)
-      globalStyles = extractABTestingStyles(render.html)
-      return render
-    }
-    const initialProps = await Document.getInitialProps(ctx)
+      const render = await originalRenderPage(options);
+      globalStyles = extractABTestingStyles(render.html);
+      return render;
+    };
+    const initialProps = await Document.getInitialProps(ctx);
     return {
       ...initialProps,
       globalStyles,
-    }
+    };
   }
   render() {
     return (
       <Html>
         <Head>
-           {/* 
+          {/* 
             Google Optimize Ant-Flicker Snippet
             https://support.google.com/optimize/answer/9692472?ref_topic=6197443
             https://stackoverflow.com/questions/63994663/general-problems-with-google-optimize-in-react-next-js
@@ -59,7 +53,7 @@ class MyDocument extends Document {
             dangerouslySetInnerHTML={{
               __html: `.async-hide { opacity: 0 !important}`,
             }}
-           />
+          />
           <script
             dangerouslySetInnerHTML={{
               __html: `
@@ -70,14 +64,6 @@ class MyDocument extends Document {
                 (a[n]=a[n]||[]).hide=h;setTimeout(function(){i();h.end=null},c);h.timeout=c;
                 })(window,document.documentElement,'async-hide','dataLayer',4000,
                 {'${process.env.NEXT_PUBLIC_GTM}':true});
-
-                <!-- Google Tag Manager -->
-                (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-                new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-                j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-                'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-                })(window,document,'script','dataLayer','${process.env.NEXT_PUBLIC_GTM}');
-                <!-- End Google Tag Manager -->
               }
             `,
             }}
@@ -85,18 +71,6 @@ class MyDocument extends Document {
           {/* END - GOOGLE TAG MANAGER */}
         </Head>
         <body>
-          {/* START - GOOGLE TAG MANAGER for inside body tag */}
-          <noscript
-            dangerouslySetInnerHTML={{
-              __html: `
-              <!-- Google Tag Manager (noscript) -->
-              <iframe src='https://www.googletagmanager.com/ns.html?id=${process.env.NEXT_PUBLIC_GTM}'
-              height='0' width='0' style='display:none;visibility:hidden'></iframe>
-              <!-- End Google Tag Manager (noscript) -->
-            `,
-            }}
-          />
-          {/* END - GOOGLE TAG MANAGER for inside body tag */}
           <style
             dangerouslySetInnerHTML={{
               __html: (this.props as any).globalStyles,
@@ -106,8 +80,8 @@ class MyDocument extends Document {
           <NextScript />
         </body>
       </Html>
-    )
+    );
   }
 }
 
-export default MyDocument
+export default MyDocument;

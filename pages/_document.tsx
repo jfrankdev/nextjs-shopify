@@ -15,16 +15,6 @@ export default function Document() {
           })(window,document,'script','dataLayer','GTM-MBZQQTS');
         `}
         </Script>
-        <Script src="https://www.googletagmanager.com/gtag/js?id=G-M554GRGBNJ" strategy="worker" />
-        <Script id="google-analytics" strategy="worker">
-          {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
- 
-          gtag('config', 'G-M554GRGBNJ');
-        `}
-        </Script>
       </Head>
       <body>
         <Main />

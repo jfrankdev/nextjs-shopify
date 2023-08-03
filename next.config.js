@@ -1,6 +1,6 @@
 const bundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: !!process.env.BUNDLE_ANALYZE,
-})
+});
 
 module.exports = bundleAnalyzer({
   images: {
@@ -23,7 +23,7 @@ module.exports = bundleAnalyzer({
           },
         ],
       },
-    ]
+    ];
   },
   env: {
     // expose env to the browser
@@ -40,4 +40,7 @@ module.exports = bundleAnalyzer({
     // a non-locale prefixed path e.g. `/hello`
     defaultLocale: 'en-US',
   },
-})
+  experimental: {
+    nextScriptWorkers: true
+  }
+});

@@ -6,6 +6,7 @@ import Document, {
   DocumentContext,
 } from 'next/document'
 import cheerio from 'cheerio'
+import Script from "next/script"
 
 /**
  * See this issue for more details https://github.com/emotion-js/emotion/issues/2040
@@ -49,7 +50,17 @@ class MyDocument extends Document {
   render() {
     return (
       <Html>
-        <Head />
+        <Head>
+          <Script id="google-tag-manager" strategy="worker">
+            {`
+              (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+              new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+              j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+              'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+              })(window,document,'script','dataLayer','GTM-MBZQQTS');
+            `}
+          </Script>
+        </Head>
         <body>
           <style
             dangerouslySetInnerHTML={{

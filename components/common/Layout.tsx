@@ -7,7 +7,7 @@ import { Button } from "theme-ui";
 import { ManagedUIContext, useUI } from "@components/common/context";
 import Head from "@components/common/Head";
 import Navbar from "@components/common/Navbar";
-import { useAcceptCookies } from "@lib/hooks/useAcceptCookies";
+// import { useAcceptCookies } from "@lib/hooks/useAcceptCookies";
 import Sidebar from "@components/common/Sidebar";
 import { CommerceProvider } from "@lib/shopify/storefront-data-hooks";
 import shopifyConfig from "@config/shopify";
@@ -65,7 +65,7 @@ const InnerLayout: React.FC<{
     },
   };
   const { displaySidebar, closeSidebar } = useUI();
-  const { acceptedCookies, onAcceptCookies } = useAcceptCookies();
+  // const { acceptedCookies, onAcceptCookies } = useAcceptCookies();
   return (
     <ThemeProvider theme={theme}>
       <Navbar />
@@ -84,11 +84,11 @@ const InnerLayout: React.FC<{
       <Sidebar open={displaySidebar || (builder.editingModel || Builder.previewingModel) === "cart-upsell-sidebar"} onClose={closeSidebar}>
       </Sidebar>
       <NoSSR>
-        <FeatureBar
+        {/* <FeatureBar
           title="This site uses cookies to improve your experience. By clicking, you agree to our Privacy Policy."
           hide={Builder.isEditing ? true : acceptedCookies}
           action={<Button onClick={() => onAcceptCookies()}>Accept cookies</Button>}
-        />
+        /> */}
       </NoSSR>
     </ThemeProvider>
   );

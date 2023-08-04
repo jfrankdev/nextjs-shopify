@@ -6,9 +6,11 @@ import { BuilderContent } from "@builder.io/sdk";
 import DefaultErrorPage from "next/error";
 import Head from "next/head";
 import { GetStaticProps } from "next";
+import builderConfig from '@config/builder'
 
 // Replace with your Public API Key
-builder.init("e940dd86845647799c3866566d5a3013");
+// builder.init("e940dd86845647799c3866566d5a3013");
+builder.init(builderConfig.apiKey)
 
 // Define a function that fetches the Builder
 // content for a given page

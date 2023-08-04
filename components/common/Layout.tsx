@@ -2,8 +2,6 @@
 /** @jsx jsx */
 import React from "react";
 import { ThemeProvider, jsx } from "theme-ui";
-import dynamic from "next/dynamic";
-import { Button } from "theme-ui";
 import { ManagedUIContext, useUI } from "@components/common/context";
 import Head from "@components/common/Head";
 import Navbar from "@components/common/Navbar";
@@ -14,11 +12,6 @@ import shopifyConfig from "@config/shopify";
 import { builder, BuilderContent, Builder } from "@builder.io/react";
 import themesMap from "@config/theme";
 import seoConfig from "@config/seo.json";
-import NoSSR from "./NoSSR";
-
-const FeatureBar = dynamic(() => import("@components/common/FeatureBar"), {
-  ssr: false,
-});
 
 const Layout: React.FC<{ pageProps: any; children: React.ReactNode }> = ({ children, pageProps }) => {
   const builderTheme = pageProps.theme;
@@ -83,13 +76,6 @@ const InnerLayout: React.FC<{
 
       <Sidebar open={displaySidebar || (builder.editingModel || Builder.previewingModel) === "cart-upsell-sidebar"} onClose={closeSidebar}>
       </Sidebar>
-      <NoSSR>
-        {/* <FeatureBar
-          title="This site uses cookies to improve your experience. By clicking, you agree to our Privacy Policy."
-          hide={Builder.isEditing ? true : acceptedCookies}
-          action={<Button onClick={() => onAcceptCookies()}>Accept cookies</Button>}
-        /> */}
-      </NoSSR>
     </ThemeProvider>
   );
 };

@@ -7,7 +7,6 @@ import { Button } from "theme-ui";
 import { ManagedUIContext, useUI } from "@components/common/context";
 import Head from "@components/common/Head";
 import Navbar from "@components/common/Navbar";
-// import { useAcceptCookies } from "@lib/hooks/useAcceptCookies";
 import Sidebar from "@components/common/Sidebar";
 import { CommerceProvider } from "@lib/shopify/storefront-data-hooks";
 import shopifyConfig from "@config/shopify";
@@ -16,9 +15,6 @@ import themesMap from "@config/theme";
 import seoConfig from "@config/seo.json";
 import NoSSR from "./NoSSR";
 
-const FeatureBar = dynamic(() => import("@components/common/FeatureBar"), {
-  ssr: false,
-});
 
 const Layout: React.FC<{ pageProps: any; children: React.ReactNode }> = ({ children, pageProps }) => {
   const builderTheme = pageProps.theme;
@@ -26,6 +22,7 @@ const Layout: React.FC<{ pageProps: any; children: React.ReactNode }> = ({ child
     <CommerceProvider {...shopifyConfig}>
       <BuilderContent isStatic content={builderTheme} modelName="theme">
         {(data, loading) => {
+          console.log("data: ", data)
           if (loading && !builderTheme) {
             return "loading ...";
           }
@@ -35,7 +32,7 @@ const Layout: React.FC<{ pageProps: any; children: React.ReactNode }> = ({ child
           return (
             <ManagedUIContext key={data?.id} siteSettings={siteSettings}>
               <Head seoInfo={siteSeoInfo || seoConfig} />
-              <InnerLayout themeName={data?.theme || "base"} colorOverrides={colorOverrides}>
+              <InnerLayout themeName={data?.theme} colorOverrides={colorOverrides}>
                 {children}
               </InnerLayout>
             </ManagedUIContext>
@@ -68,7 +65,6 @@ const InnerLayout: React.FC<{
   // const { acceptedCookies, onAcceptCookies } = useAcceptCookies();
   return (
     <ThemeProvider theme={theme}>
-      <Navbar />
       <div
         sx={{
           margin: `0 auto`,
@@ -80,16 +76,6 @@ const InnerLayout: React.FC<{
       >
         <main>{children}</main>
       </div>
-
-      <Sidebar open={displaySidebar || (builder.editingModel || Builder.previewingModel) === "cart-upsell-sidebar"} onClose={closeSidebar}>
-      </Sidebar>
-      <NoSSR>
-        {/* <FeatureBar
-          title="This site uses cookies to improve your experience. By clicking, you agree to our Privacy Policy."
-          hide={Builder.isEditing ? true : acceptedCookies}
-          action={<Button onClick={() => onAcceptCookies()}>Accept cookies</Button>}
-        /> */}
-      </NoSSR>
     </ThemeProvider>
   );
 };

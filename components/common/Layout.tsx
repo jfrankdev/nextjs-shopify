@@ -1,20 +1,14 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import React from "react";
-import { ThemeProvider, jsx } from "theme-ui";
-import dynamic from "next/dynamic";
-import { Button } from "theme-ui";
+import { Box, ThemeProvider, jsx } from "theme-ui";
 import { ManagedUIContext, useUI } from "@components/common/context";
 import Head from "@components/common/Head";
-import Navbar from "@components/common/Navbar";
-import Sidebar from "@components/common/Sidebar";
 import { CommerceProvider } from "@lib/shopify/storefront-data-hooks";
 import shopifyConfig from "@config/shopify";
-import { builder, BuilderContent, Builder } from "@builder.io/react";
+import { BuilderContent } from "@builder.io/react";
 import themesMap from "@config/theme";
 import seoConfig from "@config/seo.json";
-import NoSSR from "./NoSSR";
-
 
 const Layout: React.FC<{ pageProps: any; children: React.ReactNode }> = ({ children, pageProps }) => {
   const builderTheme = pageProps.theme;
@@ -22,9 +16,8 @@ const Layout: React.FC<{ pageProps: any; children: React.ReactNode }> = ({ child
     <CommerceProvider {...shopifyConfig}>
       <BuilderContent isStatic content={builderTheme} modelName="theme">
         {(data, loading) => {
-          console.log("data: ", data)
           if (loading && !builderTheme) {
-            return "loading ...";
+            return <Box sx={{ height: "100vh", display: "flex" }}>loading...</Box>;
           }
           const siteSettings = data?.siteSettings;
           const colorOverrides = data?.colorOverrides;

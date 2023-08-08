@@ -17,7 +17,7 @@ const Layout: React.FC<{ pageProps: any; children: React.ReactNode }> = ({ child
       <BuilderContent isStatic content={builderTheme} modelName="theme">
         {(data, loading) => {
           if (loading && !builderTheme) {
-            return <Box sx={{ height: "100vh", display: "flex" }}>loading...</Box>;
+            return <Box sx={{ height: "100vh", display: "flex" }}></Box>;
           }
           const siteSettings = data?.siteSettings;
           const colorOverrides = data?.colorOverrides;

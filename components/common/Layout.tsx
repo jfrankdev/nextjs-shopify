@@ -2,19 +2,13 @@
 /** @jsx jsx */
 import React from "react";
 import { Box, ThemeProvider, jsx } from "theme-ui";
-import dynamic from "next/dynamic";
-import { Button } from "theme-ui";
 import { ManagedUIContext, useUI } from "@components/common/context";
 import Head from "@components/common/Head";
-import Navbar from "@components/common/Navbar";
-import Sidebar from "@components/common/Sidebar";
 import { CommerceProvider } from "@lib/shopify/storefront-data-hooks";
 import shopifyConfig from "@config/shopify";
-import { builder, BuilderContent, Builder } from "@builder.io/react";
+import { BuilderContent } from "@builder.io/react";
 import themesMap from "@config/theme";
 import seoConfig from "@config/seo.json";
-import NoSSR from "./NoSSR";
-import { LoadingDots } from "../ui";
 
 const Layout: React.FC<{ pageProps: any; children: React.ReactNode }> = ({ children, pageProps }) => {
   const builderTheme = pageProps.theme;
